@@ -1,0 +1,16 @@
+targets:
+  $default:
+    builders:
+      hyper|_builder:
+        enabled: true
+        generate_for: ['lib/src/hyper_elements.dart']
+
+builders:
+  _builder:
+    target: ":hyper"
+    import: "tool/src/builder.dart"
+    builder_factories: ["hyperElementBuilder"]
+    build_extensions: {".dart": [".hyper.g.part"]}
+    auto_apply: dependents
+    build_to: cache
+    applies_builders: ["source_gen|combining_builder"]
