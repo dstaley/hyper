@@ -31,7 +31,7 @@ void main() {
   });
 
   test("sets data attributes", () {
-    var div = hyper("div", attrs: {"data-value": 5});
+    var div = hyper("div", attrs: {"data-value": 5.toString()});
     expect(div.toString(), '<div data-value="5"></div>'); // failing for IE9
   });
 
@@ -53,5 +53,15 @@ void main() {
 
   test("void elements render without a closing tag when using hyper", () {
     expect(hyper("img").toString(), "<img />");
+  });
+
+  test("special characters are correctly escaped in text content", () {
+    expect(hyper("h1", children: [t('<hello "world">')]).toString(),
+        '<h1>&lt;hello "world"&gt;</h1>');
+  });
+
+  test("special characters are correctly escaped in attributes", () {
+    var a = h.div(attrs: {'data-title': 'Hello "world"'});
+    expect(a.toString(), '<div data-title="Hello &quot;world&quot;"></div>');
   });
 }

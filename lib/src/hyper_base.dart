@@ -1,3 +1,4 @@
+import 'dart:convert';
 import './dom_elements.dart';
 
 const _reservedAttrs = ['textContent'];
@@ -6,20 +7,22 @@ const _reservedAttrs = ['textContent'];
 /// it's attributes and children.
 class Element {
   /// Creates a new Hyper Element.
-  Element(this._tag, {Map<String, Object> attrs, List<Element> children}) {
+  Element(this._tag, {Map<String, String> attrs, List<Element> children}) {
     _attrs = attrs == null ? {} : attrs;
     _children = children == null ? [] : children;
   }
 
   String _tag;
-  Map<String, Object> _attrs;
+  Map<String, String> _attrs;
   List<Element> _children;
+  static const _elementEscape = HtmlEscape(HtmlEscapeMode.element);
+  static const _attributeEscape = HtmlEscape(HtmlEscapeMode.attribute);
 
   bool _hasAttrs() => _attrs.isNotEmpty;
 
   String _printAttrs() => _attrs.keys
       .where((String k) => !_reservedAttrs.contains(k))
-      .map((k) => '$k="${_attrs[k]}"')
+      .map((k) => '$k="${_attributeEscape.convert(_attrs[k])}"')
       .join(' ');
 
   String _childrenToString() => _children.map((c) => c.toString()).join('');
@@ -27,7 +30,7 @@ class Element {
   /// Returns the element tree as an HTML string.
   String toString() {
     if (_tag == '_') {
-      return _attrs['textContent'];
+      return _elementEscape.convert(_attrs['textContent']);
     }
 
     if (voidElements.contains(_tag)) {
@@ -42,7 +45,7 @@ class Element {
 /// when you want to create a non-standard element such as `<custom-element>`.
 Element hyper(
   String tag, {
-  Map<String, Object> attrs,
+  Map<String, String> attrs,
   List<Element> children,
 }) =>
     Element(tag, attrs: attrs, children: children);

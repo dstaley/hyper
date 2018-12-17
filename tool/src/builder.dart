@@ -20,7 +20,7 @@ class HyperElementGenerator extends Generator {
             ..symbol = 'Map'
             ..types.addAll([
               refer('String'),
-              refer('Object'),
+              refer('String'),
             ]))
           ..name = 'attrs'
           ..named = true),
