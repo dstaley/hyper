@@ -1,5 +1,5 @@
 name: hyper
-description: A starting point for Dart libraries or applications.
+description: Hyper makes it easy to build HTML using Dart.
 version: 1.0.0
 homepage: https://github.com/dstaley/hyper
 author: Dylan Staley <staley.dylan@gmail.com>
