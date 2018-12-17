@@ -1,5 +1,5 @@
 name: hyper
-description: Hyper makes it easy to build HTML using Dart.
+description: Hyper is a library that makes it easy to build strings of HTML using Dart.
 version: 1.0.0
 homepage: https://github.com/dstaley/hyper
 author: Dylan Staley <staley.dylan@gmail.com>
